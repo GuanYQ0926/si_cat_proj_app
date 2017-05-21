@@ -5,17 +5,26 @@ const pad = d => {
     return (d < 10) ? '0' + d.toString() : d.toString();
 };
 
-const processData = (d) => {
+const processData = (d, datatype) => {
     let data = [];
-    for(let i=0;i<d[0].length;i++){
-        const temp_date = '201108'+pad(parseInt(i/24)+1)+pad(i%24);
-        const temp_dict = {'date': temp_date, 'target':d[0][i]-273.15+'', 'compared':d[1][i]-273.15+''};
-        data.push(temp_dict);
+    if(datatype == 'tmp'){
+        for(let i=0;i<d[0].length;i++){
+            const temp_date = '201108'+pad(parseInt(i/24)+1)+pad(i%24);
+            const temp_dict = {'date': temp_date, 'target':d[0][i]-273.15+'', 'compared':d[1][i]-273.15+''};
+            data.push(temp_dict);
+        }
+    }
+    else{
+        for(let i=0;i<d[0].length;i++){
+            const temp_date = '201108'+pad(parseInt(i/24)+1)+pad(i%24);
+            const temp_dict = {'date': temp_date, 'target':d[0][i]+'', 'compared':d[1][i]+''};
+            data.push(temp_dict);
+        }
     }
     return data;
 };
 
-export const drawLineChart = (d) => {
+export const drawLineChart = (d, datatype) => {
 
     var margin = {top: 10, right: 10, bottom: 100, left: 40},
         margin2 = {top: 300, right: 10, bottom: 20, left: 40},
@@ -70,7 +79,7 @@ export const drawLineChart = (d) => {
       .attr('transform', 'translate(' + margin2.left + ',' + margin2.top + ')');
 
 
-    const data = processData(d);
+    const data = processData(d, datatype);
 
     color.domain(d3.keys(data[0]).filter(function(key) { return key !== 'date'; }));
 
@@ -111,6 +120,39 @@ export const drawLineChart = (d) => {
     focus.append('g')
         .attr('class', 'y axis')
         .call(yAxis);
+
+    if(datatype == 'rain'){
+        focus.append('text')
+            .attr('transform', 'rotate(-90)')
+            .attr('y', 6)
+            .attr('dy', '.71em')
+            .style('text-anchor', 'end')
+            .text('Precipitation (mm)');
+    }
+    else if(datatype == 'cla'){
+        focus.append('text')
+            .attr('transform', 'rotate(-90)')
+            .attr('y', 6)
+            .attr('dy', '.71em')
+            .style('text-anchor', 'end')
+            .text('Total cloud cover');
+    }
+    else if(datatype == 'psurf'){
+        focus.append('text')
+            .attr('transform', 'rotate(-90)')
+            .attr('y', 6)
+            .attr('dy', '.71em')
+            .style('text-anchor', 'end')
+            .text('Surface pressure (Pa)');
+    }
+    else{
+        focus.append('text')
+            .attr('transform', 'rotate(-90)')
+            .attr('y', 6)
+            .attr('dy', '.71em')
+            .style('text-anchor', 'end')
+            .text('Temperature (ºC)');
+    }
 
     var contextlineGroups = context.selectAll('g')
         .data(sources)

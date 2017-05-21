@@ -32,7 +32,7 @@ const requestForHourlyData = (target_latlon_index, compared_latlon_index) => {
     .then( res => {
         const data = res.data;
         $('#linechart').empty();
-        drawLineChart(data);
+        drawLineChart(data, datatype);
     });
 };
 

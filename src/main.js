@@ -96,6 +96,7 @@ map.on('click', e => {
             map.closePopup();
             $('#paracoord').empty();
             $('#selected-latlon').empty();
+            $('#compared-data').empty();
             $('#linechart').empty();
             //$('#sunburst').empty();
             //request
