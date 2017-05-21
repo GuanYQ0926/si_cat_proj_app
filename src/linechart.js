@@ -5,7 +5,7 @@ const pad = d => {
     return (d < 10) ? '0' + d.toString() : d.toString();
 };
 
-const dataProcessor = (d) => {
+const processData = (d) => {
     let data = [];
     for(let i=0;i<d[0].length;i++){
         const temp_date = '201108'+pad(parseInt(i/24)+1)+pad(i%24);
@@ -70,7 +70,7 @@ export const drawLineChart = (d) => {
       .attr('transform', 'translate(' + margin2.left + ',' + margin2.top + ')');
 
 
-    const data = dataProcessor(d);
+    const data = processData(d);
 
     color.domain(d3.keys(data[0]).filter(function(key) { return key !== 'date'; }));
 

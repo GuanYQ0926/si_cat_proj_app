@@ -26,7 +26,8 @@ const processData = (raw_data, display_day, target_latlon_index) => {
 };
 
 const requestForHourlyData = (target_latlon_index, compared_latlon_index) => {
-    const url = `http://0.0.0.0:5000/hourly/${target_latlon_index}|${compared_latlon_index}`;
+    const datatype = $('#data-type').val();
+    const url = `http://0.0.0.0:5000/hourly/${datatype}|${target_latlon_index}|${compared_latlon_index}`;
     axios.get(url)
     .then( res => {
         const data = res.data;
@@ -130,7 +131,7 @@ export const drawParaCoords = (raw_data, display_day, target_latlon_index) => {
             .attr('text-anchor', 'middle')
             .attr('y', -9)
             .text(function(d) { return d.name; });
-    //mouse over
+    //mouse click
     svg.select('.axis').selectAll('text:not(.title)')
             .attr('class', 'label')
             .data(data, function(d){
@@ -138,8 +139,7 @@ export const drawParaCoords = (raw_data, display_day, target_latlon_index) => {
             });
 
     const projection = svg.selectAll('.axis text,.background path,.foreground path')
-            .on('click', mouseover);
-            //.on('mouseout', mouseout);
+            .on('click', mouseclick);
 
     $('svg').click( function(e){
         if(e.target == this){
@@ -147,7 +147,7 @@ export const drawParaCoords = (raw_data, display_day, target_latlon_index) => {
         }
     });
 
-    function mouseover(d){
+    function mouseclick(d){
         svg.classed('active', true);
         projection.classed('inactive', function(p){ return p !== d; });
         projection.filter(function(p){ return p===d; }).each(moveToFront);

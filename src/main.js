@@ -100,12 +100,17 @@ map.on('click', e => {
             //$('#sunburst').empty();
             //request
             requestToServer(url);
-            //sunburst in html
+            //create day selector
             $('#selected-latlon').append(`<form id='selected-form'>You cliked at ${lat.toFixed(1)}&${lon.toFixed(1)}<select id="days"></select></form>`);
             for(let i=1; i<=31; i++){
                 $('#days').append(`<option value="${i}">${i}</option>`);
             }
-            //drawSunburst();
+            //create data type selector
+            $('#compared-data').append('<form id="data-type-form">data type<select id="data-type"></select></form>');
+            $('#data-type').append('<option value="rain">RAIN</option>');
+            $('#data-type').append('<option value="cla">CLA</option>');
+            $('#data-type').append('<option value="psurf">PSURF</option>');
+            $('#data-type').append('<option value="tmp">TMP</option>');
         });
 });
 
