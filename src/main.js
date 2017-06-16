@@ -102,12 +102,12 @@ map.on('click', e => {
             //request
             requestToServer(url);
             //create day selector
-            $('#selected-latlon').append(`<form id='selected-form'>You cliked at ${lat.toFixed(1)}&${lon.toFixed(1)}<select id="days"></select></form>`);
+            $('#selected-latlon').append(`<form id='selected-form'>You cliked at ${lat.toFixed(1)}&${lon.toFixed(1)}. Select date: <select id="days"></select></form>`);
             for(let i=1; i<=31; i++){
                 $('#days').append(`<option value="${i}">${i}</option>`);
             }
             //create data type selector
-            $('#compared-data').append('<form id="data-type-form">data type<select id="data-type"></select></form>');
+            $('#compared-data').append('<form id="data-type-form">Select data: <select id="data-type"></select></form>');
             $('#data-type').append('<option value="rain">RAIN</option>');
             $('#data-type').append('<option value="cla">CLA</option>');
             $('#data-type').append('<option value="psurf">PSURF</option>');
